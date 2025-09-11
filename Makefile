@@ -14,3 +14,6 @@ clean:
 
 format:
 	dune build @fmt --auto-promote
+
+setup:
+	opam switch create . --with-dev-setup -y

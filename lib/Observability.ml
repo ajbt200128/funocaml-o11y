@@ -4,10 +4,8 @@ module Trace = Otel.Trace
 let url = "https://api.honeycomb.io/"
 
 let headers service_name =
-  [
-    ("x-honeycomb-team", "Kunot3ZuErolEud6qK7CqB");
-    ("x-honeycomb-dataset", service_name);
-  ]
+  let team = Sys.getenv "HONEYCOMB_TEAM" in
+  [ ("x-honeycomb-team", team); ("x-honeycomb-dataset", service_name) ]
 
 let setup_logger () =
   let current_reporter = Logs.reporter () in
