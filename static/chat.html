@@ -1,0 +1,30 @@
+<html>
+<body>
+<form>
+    <input type="submit" value="Send">
+    <input type="text" id="message" size="64" autofocus>
+</form>
+<script>
+    let message = document.getElementById("message");
+    let chat = document.querySelector("body");
+    let socket = new WebSocket("ws://" + window.location.host + "/websocket");
+
+    socket.onmessage = function (event) {
+    let item = document.createElement("div");
+    item.innerText = event.data;
+    chat.appendChild(item);
+    };
+
+    document.querySelector("form").onsubmit = function () {
+    if (socket.readyState != WebSocket.OPEN)
+        return false;
+    if (!message.value)
+        return false;
+
+    socket.send(message.value);
+    message.value = "";
+    return false;
+    };
+</script>
+</body>
+</html>

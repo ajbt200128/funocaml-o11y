@@ -1,0 +1,4 @@
+(executable
+ (public_name funocaml-o11y)
+ (name main)
+ (libraries opentelemetry dream logs funocaml_o11y))

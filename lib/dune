@@ -1,0 +1,11 @@
+(library
+ (name funocaml_o11y)
+ (libraries
+  dream
+  dream-html
+  ambient-context-lwt
+  opentelemetry
+  opentelemetry-logs
+  opentelemetry-client-ocurl)
+ (preprocess
+  (pps lwt_ppx)))
