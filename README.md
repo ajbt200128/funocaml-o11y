@@ -162,7 +162,6 @@ let request_attributes (r : Dream.request) =
   @ session_attrs @ header_attrs
 
 let with_middleware (f : Dream.middleware -> 'a) =
-  Dream.initialize_log ();
   (* Setup observability *)
   Observability.setup () @@ fun _scope ->
   (* Create middleware *)
