@@ -117,6 +117,9 @@ As part of this setup, this will start sending metrics about your garbage collec
 ## Part 3: Tracing
 Let's modify our get alias in [main.ml](./bin/main.ml) to trace the resource:
 ``` ocaml
+module Otel = Opentelemetry
+module Trace = Otel.Trace
+
 let get path handler =
   let name = "GET " ^ path in
   (* Let's name it based on the path and operation *)
@@ -130,7 +133,7 @@ things on the trace page!
 We can add "middleware" to Dream, to also trace every request. We can then add
 attributes specific to the request to help us query the data.
 
-In [./lib/Observability.ml](./lib/Observability.ml)
+In [./lib/OMiddleware](./lib/OMiddleware.ml)
 
 ``` ocaml
 module Otel = Opentelemetry
@@ -159,6 +162,7 @@ let request_attributes (r : Dream.request) =
   @ session_attrs @ header_attrs
 
 let with_middleware (f : Dream.middleware -> 'a) =
+  Dream.initialize_log ();
   (* Setup observability *)
   Observability.setup () @@ fun _scope ->
   (* Create middleware *)
