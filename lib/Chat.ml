@@ -49,7 +49,6 @@ let track =
 let forget client_id = Hashtbl.remove clients client_id
 
 let send message =
-  Metrics.message_sent ();
   Hashtbl.to_seq_values clients
   |> List.of_seq
   |> Lwt_list.iter_p (fun client -> Dream.send client message)
