@@ -23,19 +23,25 @@ let request_attributes (r : Dream.request) =
   ]
   @ session_attrs @ header_attrs
 
-let with_middleware service_name (f : Dream.middleware -> 'a) =
+let with_middleware (f : Dream.middleware -> 'a) =
+  (* Initialize the dream logger so in setup we can attach to it *)
   Dream.initialize_log ();
-  Observability.setup service_name @@ fun _scope ->
+  (* Setup observability *)
+  Observability.setup () @@ fun _scope ->
+  (* Create middleware *)
   let middleware (inner_handler : Dream.handler) request =
+    Metrics.count_request ();
     let attrs = request_attributes request in
+    (* Setup a top level span that indicates this is the entrypoint of the
+       server *)
     Trace.with_ "http.request" ~kind:Opentelemetry_proto.Trace.Span_kind_server
       ~attrs (fun scope ->
-        Metrics.count_request ();
+        (* Try processing the request *)
         try%lwt inner_handler request
         with exn ->
-          let exn_str = Printexc.to_string exn in
-          Otel.Scope.set_status scope
-            Otel.Span_status.(make ~message:exn_str ~code:Status_code_ok);
+          (* If there's an exception, record it *)
+          let raw_backtrace = Printexc.get_raw_backtrace () in
+          Otel.Scope.record_exception scope exn raw_backtrace;
           raise exn)
   in
   f middleware

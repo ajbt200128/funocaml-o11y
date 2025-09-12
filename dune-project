@@ -21,7 +21,6 @@
    ocaml
    dune
 
-   ambient-context-lwt
    dream
    dream-html
    logs

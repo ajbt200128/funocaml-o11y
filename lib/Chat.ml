@@ -3,7 +3,7 @@ let html =
   let open HTML in
   html []
     [
-      head [] [];
+      head [] [ title [] "Greeting" ];
       body []
         [
           form []

@@ -17,3 +17,6 @@ format:
 
 setup:
 	opam switch create . --with-dev-setup -y
+
+shell:
+	nix develop .
