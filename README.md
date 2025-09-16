@@ -2,7 +2,7 @@
 This is a workshop on adding OpenTelemetry to an OCaml program, given at
 [FUNOCaml
 2025](https://fun-ocaml.com/2025/ocaml-observability-with-opentelemetry/). For
-the slides please see here.
+the slides please see [here](https://link.excalidraw.com/p/readonly/6dHJsAEg8pYNdhI1xPk8).
 
 The head of the main branch of this repo is a completed implementation. If you
 are following along with the workshop please first checkout the `base` branch:
@@ -43,7 +43,7 @@ make run
 and see the following:
 ![demo application running](./assets/setup.gif)
 then go to [http://localhost:8080](http://localhost:8080) to see the demo application running:
-[application webserver running](./assets/application.gif)
+![application webserver running](./assets/application.gif)
 
 Take a few minutes and play around on the website, look at the code, and think: where might we want to add observability?
 
@@ -58,7 +58,7 @@ We will be using Honeycomb as it is free and easy to use. First go [sign
 up](https://ui.honeycomb.io/signup) for a free account, make an environment
 called whatever you want your service to be named, and then copy the api token:
 
-[api token page](./assets/api.png)
+![api token page](./assets/api.png)
 
 Now set an env var with it: 
 
@@ -78,13 +78,16 @@ let service_name = "dream-hello-world"
 
 let headers =
   (* Get your api token from the env *)
-  let team = Sys.getenv "HONEYCOMB_TEAM" in
-  (* alt: just paste it in your code, but don't commit it! **)
-  [ ("x-honeycomb-team", team); ("x-honeycomb-dataset", service_name) ]
+  let team_opt = Sys.getenv_opt "HONEYCOMB_TEAM" in
+  match team_opt with
+  | None -> failwith "HONEYCOMB_TEAM environment variable not set"
+  | Some team ->
+      (* alt: just paste it in your code, but don't commit it! **)
+      [ ("x-honeycomb-team", team); ("x-honeycomb-dataset", service_name) ]
 
 let setup () =
     (* Sets the service name *)
-    Otel.Globals.service_name := "my-service";
+    Otel.Globals.service_name := service_name;
     (* Point the backend to the honeycomb api and add headers for auth *)
     let config = Opentelemetry_client_ocurl.Config.make ~headers ~url () in
     Opentelemetry_client_ocurl.with_setup ~config ()
@@ -110,7 +113,7 @@ let () =
 ```
 
 
-By wrapping the entire server in this setup function we are ensuring that when the server exits, via ctrl c or because of an uncaught exception, we will gracefully shut down the OpenTelemetry backend and ensure all signals are flushed and collected.
+By wrapping the entire server in this setup function we are ensuring that when the server exits, via ctrl c or because of an uncaught exception, we will gracefully shut down the OpenTelemetry backend and ensure all signals flush and get collected.
 
 As part of this setup, this will start sending metrics about your garbage collector. Go to the "Explore Data" page and you should be able to see some things coming in.
 
@@ -121,8 +124,8 @@ module Otel = Opentelemetry
 module Trace = Otel.Trace
 
 let get path handler =
+  (* Let's name the span based on the path and operation *)
   let name = "GET " ^ path in
-  (* Let's name it based on the path and operation *)
   let handler x = Trace.with_ name (fun _scope -> handler x) in
   Dream.get path handler
 ```
@@ -195,7 +198,7 @@ let () =
 
 Now we have tracing fully setup! Try clicking around the website, specifically
 the error page. You should see in Honeycomb we now have error tracking, which we
-can find in traces and the home page. You can also see how spans are nested. Try
+can find in traces and the home page. You can also see how spans nest. Try
 tracing more functions, such as the long computation function
 
 ### Part 4: Logging

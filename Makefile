@@ -1,6 +1,6 @@
 all: build
 
-funocaml-o11y.opam: dune-project funocaml-o11y.opam.template
+funocaml-o11y.opam: dune-project
 	dune build funocaml-o11y.opam
 
 build: funocaml-o11y.opam
