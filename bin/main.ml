@@ -3,7 +3,7 @@ module Otel = Opentelemetry
 module Trace = Otel.Trace
 
 let get path handler =
-  (* Let's name the trace based on the path and operation *)
+  (* Let's name the span based on the path and operation *)
   let name = "GET " ^ path in
   let handler x = Trace.with_ name (fun _scope -> handler x) in
   Dream.get path handler

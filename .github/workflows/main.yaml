@@ -24,7 +24,6 @@ jobs:
         uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: 5.3.0
-          opam-depext-flags: --with-dev-setup
           dune-cache: true
           allow-prerelease-opam: true
       - name: Setup
