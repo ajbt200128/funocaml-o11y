@@ -63,7 +63,7 @@ called whatever you want your service to be named, and then copy the api token:
 Now set an env var with it: 
 
 ``` bash
-export HONEYCOMBY_TEAM="<api_token>"
+export HONEYCOMB_TEAM="<api_token>"
 ```
 
 
