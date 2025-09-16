@@ -16,7 +16,7 @@ format:
 	opam exec -- dune build @fmt --auto-promote
 
 setup:
-	opam update
+	opam update -y
 	opam switch create . --with-dev-setup -y
 
 install-deps:
