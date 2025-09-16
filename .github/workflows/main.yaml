@@ -28,4 +28,4 @@ jobs:
       - name: Setup
         run: make install-deps
       - name: Build
-        run: opam exec -- make
+        run: make

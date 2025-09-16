@@ -9,14 +9,14 @@ license: "LICENSE"
 homepage: "https://github.com/ajbt200128/funocaml-o11y"
 bug-reports: "https://github.com/ajbt200128/funocaml-o11y/issues"
 depends: [
-  "ocaml"
+  "ocaml" {>= "5.3.0"}
   "dune" {>= "3.19"}
   "dream"
   "dream-html"
   "logs"
-  "opentelemetry"
-  "opentelemetry-client-ocurl"
-  "opentelemetry-logs"
+  "opentelemetry" {>= "0.12"}
+  "opentelemetry-client-ocurl" {>= "0.12"}
+  "opentelemetry-logs" {>= "0.12"}
   "ocaml-lsp-server" {with-dev-setup}
   "ocamlformat" {with-dev-setup}
   "ocamlmerlin-mlx" {with-dev-setup}

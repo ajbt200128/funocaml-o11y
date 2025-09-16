@@ -18,15 +18,15 @@
  (synopsis "An OCaml observability example")
  (description "A small example binary that demonstrates how to use Opentelemetry in OCaml")
  (depends
-   ocaml
+   (ocaml (>= 5.3.0))
    dune
 
    dream
    dream-html
    logs
-   opentelemetry
-   opentelemetry-client-ocurl
-   opentelemetry-logs
+   (opentelemetry (>= 0.12))
+   (opentelemetry-client-ocurl (>= 0.12))
+   (opentelemetry-logs (>= 0.12))
    (ocaml-lsp-server :with-dev-setup)
    (ocamlformat :with-dev-setup)
    (ocamlmerlin-mlx :with-dev-setup)

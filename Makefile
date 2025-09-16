@@ -1,21 +1,22 @@
 all: build
 
 funocaml-o11y.opam: dune-project
-	dune build funocaml-o11y.opam
+	opam exec -- dune build funocaml-o11y.opam
 
 build: funocaml-o11y.opam
-	dune build
+	opam exec -- dune build
 
 run: funocaml-o11y.opam
-	dune exec funocaml-o11y
+	opam exec -- dune exec funocaml-o11y
 
 clean:
-	dune clean
+	opam exec -- dune clean
 
 format:
-	dune build @fmt --auto-promote
+	opam exec -- dune build @fmt --auto-promote
 
 setup:
+	opam update -y
 	opam switch create . --with-dev-setup -y
 
 install-deps:
