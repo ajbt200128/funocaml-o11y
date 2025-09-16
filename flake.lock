@@ -140,6 +140,22 @@
         "type": "github"
       }
     },
+    "opam-repository_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1758010390,
+        "narHash": "sha256-G/d7cHjLP31314iCReHC4NsBWDavCX3XSsPB2vCFVGw=",
+        "owner": "ocaml",
+        "repo": "opam-repository",
+        "rev": "61c17ba4eac9621c8eb5ef9422afdda05d7a19b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ocaml",
+        "repo": "opam-repository",
+        "type": "github"
+      }
+    },
     "opam2json": {
       "inputs": {
         "nixpkgs": [
@@ -169,7 +185,8 @@
           "opam-nix",
           "nixpkgs"
         ],
-        "opam-nix": "opam-nix"
+        "opam-nix": "opam-nix",
+        "opam-repository": "opam-repository_2"
       }
     },
     "systems": {

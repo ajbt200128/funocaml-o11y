@@ -1,6 +1,6 @@
 all: build
 
-funocaml-o11y.opam: dune-project funocaml-o11y.opam.template
+funocaml-o11y.opam: dune-project
 	dune build funocaml-o11y.opam
 
 build: funocaml-o11y.opam
@@ -17,6 +17,9 @@ format:
 
 setup:
 	opam switch create . --with-dev-setup -y
+
+install-deps:
+	opam install . --deps-only --with-dev-setup -y
 
 shell:
 	nix develop .

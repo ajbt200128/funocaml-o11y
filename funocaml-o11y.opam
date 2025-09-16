@@ -38,9 +38,3 @@ build: [
 ]
 dev-repo: "git+https://github.com/ajbt200128/funocaml-o11y.git"
 x-maintenance-intent: ["(latest)"]
-pin-depends: [
-  ["opentelemetry.dev" "git+https://github.com/imandra-ai/ocaml-opentelemetry#8eda0730e92d650ed4776d3e206c2e259f374965"]
-  ["opentelemetry-client-ocurl.dev" "git+https://github.com/imandra-ai/ocaml-opentelemetry#8eda0730e92d650ed4776d3e206c2e259f374965"]
-  ["opentelemetry-client-cohttp-eio.dev" "git+https://github.com/imandra-ai/ocaml-opentelemetry#8eda0730e92d650ed4776d3e206c2e259f374965"]
-  ["opentelemetry-logs.dev" "git+https://github.com/imandra-ai/ocaml-opentelemetry#8eda0730e92d650ed4776d3e206c2e259f374965"]
-]

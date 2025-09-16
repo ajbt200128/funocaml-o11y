@@ -3,6 +3,10 @@
     opam-nix.url = "github:tweag/opam-nix";
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.follows = "opam-nix/nixpkgs";
+    opam-repository = {
+      url = "github:ocaml/opam-repository";
+      flake = false;
+    };
   };
   outputs =
     {
@@ -10,6 +14,7 @@
       flake-utils,
       opam-nix,
       nixpkgs,
+      opam-repository,
     }@inputs:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -24,7 +29,7 @@
         query = devPackagesQuery // {
           ocaml-base-compiler = "*";
         };
-        scope = on.buildOpamProject' { } ./. query;
+        scope = on.buildOpamProject' { repos = [ "${opam-repository}" ]; } ./. query;
         overlay = final: prev: {
           # You can add overrides here
         };
