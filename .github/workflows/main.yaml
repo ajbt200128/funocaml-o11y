@@ -1,4 +1,4 @@
-name: build
+name: opam
 
 on:
   pull_request:
@@ -25,8 +25,7 @@ jobs:
         with:
           ocaml-compiler: 5.3.0
           dune-cache: true
-          allow-prerelease-opam: true
       - name: Setup
-        run: make setup
+        run: make install-deps
       - name: Build
         run: opam exec -- make
